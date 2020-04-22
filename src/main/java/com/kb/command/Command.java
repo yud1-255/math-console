@@ -1,6 +1,6 @@
 package com.kb.command;
 
-public interface Command<T> {
+public interface Command {
     void execute();
-    CommandResult<T> getCommandResult();
+    CommandResult getCommandResult();
 }

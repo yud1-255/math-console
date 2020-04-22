@@ -1,5 +1,11 @@
 package com.kb.command;
 
-public interface CommandResult<T> {
-    T getCommandResult();
+public class CommandResult {
+    private Object value;
+    public CommandResult(Object value) {
+        this.value = value;
+    }
+    public Object getValue() {
+        return this.value;
+    }
 }
