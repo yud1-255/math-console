@@ -26,7 +26,6 @@ public class FindPrimeCommand implements Command {
             int nextPrime = findNextPrime(confirmedPrimes.get(confirmedPrimes.size() - 1));
             confirmedPrimes.add(nextPrime);
 
-            System.out.println(nextPrime);
         }
 
         return confirmedPrimes;
