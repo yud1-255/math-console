@@ -11,7 +11,9 @@ public class FindPrimeCommandTest {
 
     @Test
     public void whenNEqualsThree_returnThreeSortedPrimes() {
-        FindPrimeCommand sut = new FindPrimeCommand(3);
+        FindPrimeCommand sut = new FindPrimeCommand(
+                FindPrimeCommand.createCommandRequest(3)
+        );
         sut.execute();
 
         int[] actual = (int[])sut.getCommandResult().getValue();
@@ -29,7 +31,7 @@ public class FindPrimeCommandTest {
         primeMap.put(11, 31);
 
         for (int key : primeMap.keySet()) {
-            FindPrimeCommand sut = new FindPrimeCommand(key);
+            FindPrimeCommand sut = new FindPrimeCommand(FindPrimeCommand.createCommandRequest(key));
 
             sut.execute();
             CommandResult result = sut.getCommandResult();
@@ -51,7 +53,7 @@ public class FindPrimeCommandTest {
         primeMap.put(1000, 7919);
 
         for (int key : primeMap.keySet()) {
-            FindPrimeCommand sut = new FindPrimeCommand(key);
+            FindPrimeCommand sut = new FindPrimeCommand(FindPrimeCommand.createCommandRequest(key));
 
             sut.execute();
             CommandResult result = sut.getCommandResult();

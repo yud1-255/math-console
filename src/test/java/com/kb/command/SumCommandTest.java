@@ -19,7 +19,9 @@ public class SumCommandTest {
     public void whenNotExecuted_returnNullCommandResult() {
         double param1 = positiveNumbers[3], param2 = positiveNumbers[1];
 
-        SumCommand sut = new SumCommand(param1, param2);
+        SumCommand sut = new SumCommand(
+                SumCommand.createCommandRequest(param1, param2)
+        );
         CommandResult result = sut.getCommandResult();
 
         assertNull(result);
@@ -30,7 +32,7 @@ public class SumCommandTest {
         double param1 = positiveNumbers[0], param2 = negativeNumbers[2];
         double expected = param1 + param2;
 
-        SumCommand sut = new SumCommand(param1, param2);
+        SumCommand sut = new SumCommand(SumCommand.createCommandRequest(param1, param2));
         sut.execute();
         CommandResult result = sut.getCommandResult();
 
@@ -44,7 +46,7 @@ public class SumCommandTest {
         double param1 = positiveNumbers[0], param2 = positiveNumbers[0];
         double expected = param1 * 2;
 
-        SumCommand sut = new SumCommand(param1, param2);
+        SumCommand sut = new SumCommand(SumCommand.createCommandRequest(param1, param2));
         sut.execute();
         CommandResult result = sut.getCommandResult();
 

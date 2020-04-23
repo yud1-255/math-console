@@ -4,12 +4,8 @@ public class FibonacciCommand implements Command {
     private int n;
     private CommandResult result;
 
-    public FibonacciCommand(int n) {
-        if (n < 0) {
-            throw new IllegalArgumentException("Invalid argument: should be positive integer");
-        }
-
-        this.n = n;
+    public FibonacciCommand(FibonacciCommandRequest commandRequest) {
+        this.n = commandRequest.getN();
     }
 
     private int[] findFibonacci(int n) {
@@ -40,4 +36,24 @@ public class FibonacciCommand implements Command {
         return result;
     }
 
+    public static FibonacciCommandRequest createCommandRequest(int n) {
+        return new FibonacciCommandRequest(n);
+    }
+
+}
+
+class FibonacciCommandRequest {
+    private int n;
+
+    public FibonacciCommandRequest(int n) {
+        if (n < 0) {
+            throw new IllegalArgumentException("Invalid argument: should be positive integer");
+        }
+
+        this.n = n;
+    }
+
+    public int getN() {
+        return n;
+    }
 }

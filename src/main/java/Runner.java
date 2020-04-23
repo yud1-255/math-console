@@ -7,8 +7,14 @@ public class Runner {
     public static void main(String[] argv) {
         System.out.println("Hello World!");
 
-        SumCommand sumCommand = new SumCommand(2, 3);
-        FibonacciCommand fibonacciCommand = new FibonacciCommand(7);
+        //SumCommand sumCommand = new SumCommand(2, 3);
+        SumCommand sumCommand = new SumCommand(
+                SumCommand.createCommandRequest(2, 3)
+        );
+
+        FibonacciCommand fibonacciCommand = new FibonacciCommand(
+                FibonacciCommand.createCommandRequest(7)
+        );
 
         MathOperator ops = new MathOperator();
         ops.addCommand(sumCommand);

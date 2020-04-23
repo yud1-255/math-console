@@ -10,8 +10,8 @@ public class FindPrimeCommand implements Command {
 
     private List<Integer> confirmedPrimes = new ArrayList<>();
 
-    public FindPrimeCommand(int n) {
-        this.n = n;
+    public FindPrimeCommand(FindPrimeCommandRequest commandRequest) {
+        this.n = commandRequest.getN();
     }
 
     private FindPrimeCommand() { }
@@ -81,5 +81,25 @@ public class FindPrimeCommand implements Command {
     @Override
     public CommandResult getCommandResult() {
         return result;
+    }
+
+    public static FindPrimeCommandRequest createCommandRequest(int n) {
+        return new FindPrimeCommandRequest(n);
+    }
+}
+
+class FindPrimeCommandRequest {
+    private int n;
+
+    public FindPrimeCommandRequest(int n) {
+        if (n <= 0) {
+            throw new IllegalArgumentException("Invalid argument: should be positive integer");
+        }
+
+        this.n = n;
+    }
+
+    public int getN() {
+        return n;
     }
 }

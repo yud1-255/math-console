@@ -14,7 +14,7 @@ public class MathOperatorTest {
     @Test
     public void whenZeroCommandAdded_returnOneCommandList() {
         MathOperator mathOperator = new MathOperator();
-        SumCommand sumCommand = new SumCommand(3, 4);
+        SumCommand sumCommand = new SumCommand(SumCommand.createCommandRequest(3, 4));
 
         mathOperator.addCommand(sumCommand);
 
@@ -24,8 +24,8 @@ public class MathOperatorTest {
     @Test
     public void whenExistingCommandsRemoved_returnWithRemovedLastCommand() {
         MathOperator mathOperator = new MathOperator();
-        SumCommand sumCommand = new SumCommand(4, 1);
-        MultiplyCommand multiplyCommand = new MultiplyCommand(2, 3);
+        SumCommand sumCommand = new SumCommand(SumCommand.createCommandRequest(4, 1));
+        MultiplyCommand multiplyCommand = new MultiplyCommand(MultiplyCommand.createCommandRequest(2, 3));
 
         mathOperator.addCommand(sumCommand);
         mathOperator.addCommand(multiplyCommand);
@@ -48,7 +48,7 @@ public class MathOperatorTest {
     @Test
     public void whenCommandExists_returnValidCommandResult() {
         MathOperator mathOperator = new MathOperator();
-        SumCommand sumCommand = new SumCommand(-3, 6);
+        SumCommand sumCommand = new SumCommand(SumCommand.createCommandRequest(-3, 6));
         mathOperator.addCommand(sumCommand);
 
         CommandResult commandResult = mathOperator.executeCommand();
@@ -59,8 +59,8 @@ public class MathOperatorTest {
     @Test
     public void whenCommandExists_returnSameNumberOfCommandResults() {
         MathOperator mathOperator = new MathOperator();
-        SumCommand sumCommand = new SumCommand(1, 8);
-        MultiplyCommand multiplyCommand = new MultiplyCommand(2, 7);
+        SumCommand sumCommand = new SumCommand(SumCommand.createCommandRequest(1, 8));
+        MultiplyCommand multiplyCommand = new MultiplyCommand(MultiplyCommand.createCommandRequest(2, 7));
 
         mathOperator.addCommand(sumCommand);
         mathOperator.addCommand(multiplyCommand);

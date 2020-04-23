@@ -26,7 +26,11 @@ public class FibonacciCommandTest {
     public void whenNotExecuted_returnNullCommandResult() {
         int param = 5;
 
-        FibonacciCommand sut = new FibonacciCommand(param);
+
+        FibonacciCommand sut = new FibonacciCommand(
+                FibonacciCommand.createCommandRequest(param)
+        );
+
         CommandResult result = sut.getCommandResult();
 
         assertNull(result);
@@ -35,7 +39,7 @@ public class FibonacciCommandTest {
     @Test
     public void whenValidInput_returnValidArrays() {
         int param = 9;
-        FibonacciCommand sut = new FibonacciCommand(param);
+        FibonacciCommand sut = new FibonacciCommand(FibonacciCommand.createCommandRequest(param));
         sut.execute();
         CommandResult result = sut.getCommandResult();
 
@@ -49,7 +53,9 @@ public class FibonacciCommandTest {
     @Test
     public void whenMultipleCases_returnValidLastElement() {
         for (int key : fibonacciMap.keySet()) {
-            FibonacciCommand sut = new FibonacciCommand(key);
+            FibonacciCommand sut = new FibonacciCommand(
+                    FibonacciCommand.createCommandRequest(key)
+            );
             sut.execute();
 
             CommandResult result = sut.getCommandResult();
@@ -66,7 +72,7 @@ public class FibonacciCommandTest {
     public void whenNegative_throwIllegalArgumentException() {
         int param = -1;
 
-        FibonacciCommand sut = new FibonacciCommand(param);
+        FibonacciCommand sut = new FibonacciCommand(new FibonacciCommandRequest(param));
         sut.execute();
         CommandResult result = sut.getCommandResult();
 

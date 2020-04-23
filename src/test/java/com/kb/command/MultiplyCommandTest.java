@@ -25,7 +25,7 @@ public class MultiplyCommandTest {
         double param1 = positiveNumbers[posIdx];
         double param2 = negativeNumbers[negIdx];
 
-        MultiplyCommand sut = new MultiplyCommand(param1, param2);
+        MultiplyCommand sut = new MultiplyCommand(MultiplyCommand.createCommandRequest(param1, param2));
         CommandResult result = sut.getCommandResult();
 
         assertNull(result);
@@ -37,7 +37,7 @@ public class MultiplyCommandTest {
         double param1 = positiveNumbers[new Random().nextInt(positiveNumbers.length)];
         double param2 = negativeNumbers[new Random().nextInt(negativeNumbers.length)];
 
-        MultiplyCommand sut = new MultiplyCommand(param1, param2);
+        MultiplyCommand sut = new MultiplyCommand(MultiplyCommand.createCommandRequest(param1, param2));
         sut.execute();
         CommandResult result = sut.getCommandResult();
 
@@ -54,7 +54,7 @@ public class MultiplyCommandTest {
         double param1 = positiveNumbers[new Random().nextInt(positiveNumbers.length)];
         double param2 = positiveNumbers[new Random().nextInt(positiveNumbers.length)];
 
-        MultiplyCommand sut = new MultiplyCommand(param1, param2);
+        MultiplyCommand sut = new MultiplyCommand(MultiplyCommand.createCommandRequest(param1, param2));
         sut.execute();
         CommandResult result = sut.getCommandResult();
 
@@ -68,7 +68,7 @@ public class MultiplyCommandTest {
         double param1 = positiveNumbers[new Random().nextInt(positiveNumbers.length)];
         double param2 = negativeNumbers[new Random().nextInt(negativeNumbers.length)];
 
-        MultiplyCommand sut = new MultiplyCommand(param1, param2);
+        MultiplyCommand sut = new MultiplyCommand(MultiplyCommand.createCommandRequest(param1, param2));
         sut.execute();
         CommandResult result = sut.getCommandResult();
 
@@ -81,7 +81,7 @@ public class MultiplyCommandTest {
         double param1 = 0;
         double param2 = new Random().nextDouble();
 
-        MultiplyCommand sut = new MultiplyCommand(param1, param2);
+        MultiplyCommand sut = new MultiplyCommand(MultiplyCommand.createCommandRequest(param1, param2));
         sut.execute();
         CommandResult result = sut.getCommandResult();
 
