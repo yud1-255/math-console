@@ -1,17 +1,23 @@
 package com.kb.command;
 
+import com.kb.receiver.MathReceiver;
+
 public class MultiplyCommand implements Command {
     private double x, y;
+    private MathReceiver receiver;
     private CommandResult result;
 
-    public MultiplyCommand(MultiplyCommandRequest commandRequest) {
+    public MultiplyCommand(MathReceiver receiver, MultiplyCommandRequest commandRequest) {
+        this.receiver = receiver;
         this.x = commandRequest.getX();
         this.y = commandRequest.getY();
     }
 
+    private MultiplyCommand() { }
+
     @Override
     public void execute() {
-        this.result = new CommandResult(x * y);
+        this.result = new CommandResult(receiver.multiply(this.x, this.y));
     }
 
     @Override

@@ -1,5 +1,7 @@
 package com.kb.command;
 
+import com.kb.receiver.MathReceiver;
+import com.kb.receiver.StandardMathReceiver;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -8,11 +10,14 @@ import java.util.Random;
 import static org.junit.Assert.*;
 
 public class MultiplyCommandTest {
+
+    MathReceiver standardMathReceiver;
     double[] positiveNumbers;
     double[] negativeNumbers;
 
     @Before
     public void setUp() {
+        standardMathReceiver = new StandardMathReceiver();
         positiveNumbers = new double[] { 21, 32, 66, 123, 9 };
         negativeNumbers = new double[] { -1, -6, -91, -8, -102 };
     }
@@ -25,7 +30,7 @@ public class MultiplyCommandTest {
         double param1 = positiveNumbers[posIdx];
         double param2 = negativeNumbers[negIdx];
 
-        MultiplyCommand sut = new MultiplyCommand(MultiplyCommand.createCommandRequest(param1, param2));
+        MultiplyCommand sut = new MultiplyCommand(standardMathReceiver, MultiplyCommand.createCommandRequest(param1, param2));
         CommandResult result = sut.getCommandResult();
 
         assertNull(result);
@@ -37,7 +42,7 @@ public class MultiplyCommandTest {
         double param1 = positiveNumbers[new Random().nextInt(positiveNumbers.length)];
         double param2 = negativeNumbers[new Random().nextInt(negativeNumbers.length)];
 
-        MultiplyCommand sut = new MultiplyCommand(MultiplyCommand.createCommandRequest(param1, param2));
+        MultiplyCommand sut = new MultiplyCommand(standardMathReceiver, MultiplyCommand.createCommandRequest(param1, param2));
         sut.execute();
         CommandResult result = sut.getCommandResult();
 
@@ -48,45 +53,4 @@ public class MultiplyCommandTest {
         assertEquals(expected, result.getValue());
     }
 
-    @Test
-    public void whenPositiveAndPositive_returnPositiveCommandResult() {
-
-        double param1 = positiveNumbers[new Random().nextInt(positiveNumbers.length)];
-        double param2 = positiveNumbers[new Random().nextInt(positiveNumbers.length)];
-
-        MultiplyCommand sut = new MultiplyCommand(MultiplyCommand.createCommandRequest(param1, param2));
-        sut.execute();
-        CommandResult result = sut.getCommandResult();
-
-        assertNotNull(result);
-        assertTrue((double)result.getValue() > 0);
-    }
-
-    @Test
-    public void whenPositiveAndNegative_returnNegativeCommandResult() {
-
-        double param1 = positiveNumbers[new Random().nextInt(positiveNumbers.length)];
-        double param2 = negativeNumbers[new Random().nextInt(negativeNumbers.length)];
-
-        MultiplyCommand sut = new MultiplyCommand(MultiplyCommand.createCommandRequest(param1, param2));
-        sut.execute();
-        CommandResult result = sut.getCommandResult();
-
-        assertNotNull(result);
-        assertTrue((double)result.getValue() < 0);
-    }
-
-    @Test
-    public void whenZero_returnZeroCommandResult() {
-        double param1 = 0;
-        double param2 = new Random().nextDouble();
-
-        MultiplyCommand sut = new MultiplyCommand(MultiplyCommand.createCommandRequest(param1, param2));
-        sut.execute();
-        CommandResult result = sut.getCommandResult();
-
-        assertNotNull(result);
-        assertEquals(0, (double)result.getValue(), 1e-8);
-
-    }
 }

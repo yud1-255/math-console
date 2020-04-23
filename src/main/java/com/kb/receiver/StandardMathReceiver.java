@@ -1,6 +1,12 @@
 package com.kb.receiver;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 public class StandardMathReceiver implements MathReceiver {
+    private List<Integer> confirmedPrimes = new ArrayList<>();
+
     @Override
     public double sum(double x, double y) {
         return x + y;
@@ -30,8 +36,68 @@ public class StandardMathReceiver implements MathReceiver {
         return fib;
     }
 
-    @Override
-    public int[] findPrime(int n) {
-        return new int[0];
+    private List<Integer> generatePrimes(int n) {
+        if (confirmedPrimes.size() == 0) {
+            confirmedPrimes.add(2);
+            confirmedPrimes.add(3);
+        }
+
+        while (confirmedPrimes.size() < n) {
+            int nextPrime = findNextPrime(confirmedPrimes.get(confirmedPrimes.size() - 1));
+            confirmedPrimes.add(nextPrime);
+
+        }
+
+        return confirmedPrimes;
+
     }
+
+    private int findNextPrime(int lastPrime) {
+        int primeCandidate = lastPrime + 2; //start from odd numbers
+        while (!isPrime(primeCandidate)) {
+            primeCandidate = primeCandidate + 2;
+
+        }
+
+        return primeCandidate;
+    }
+
+    private boolean isPrime(int n) {
+        /* implementation note: store primes in list, then check if divisible by stored list */
+
+        if (confirmedPrimes.contains(n))
+            return true;
+
+        double upperBound = Math.ceil(Math.sqrt(n));
+
+        for (int num : confirmedPrimes) {
+            if (num > upperBound) {
+                break;
+            }
+
+            if (n % num == 0) {
+                return false;
+            }
+        }
+
+        return true;
+
+    }
+
+    @Override
+    public int[] findPrimes(int n) {
+        this.confirmedPrimes = generatePrimes(n);
+
+        int[] intArray = new int[confirmedPrimes.size()];
+        Iterator<Integer> itr = confirmedPrimes.iterator();
+
+        for (int i = 0; i < intArray.length; i++) {
+            intArray[i]  = itr.next();
+        }
+
+        return intArray;
+
+    }
+
+
 }

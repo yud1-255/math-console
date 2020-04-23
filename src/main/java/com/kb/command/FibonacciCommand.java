@@ -1,34 +1,22 @@
 package com.kb.command;
 
+import com.kb.receiver.MathReceiver;
+
 public class FibonacciCommand implements Command {
     private int n;
+    MathReceiver receiver;
     private CommandResult result;
 
-    public FibonacciCommand(FibonacciCommandRequest commandRequest) {
+    public FibonacciCommand(MathReceiver receiver, FibonacciCommandRequest commandRequest) {
+        this.receiver = receiver;
         this.n = commandRequest.getN();
     }
 
-    private int[] findFibonacci(int n) {
-        /* implementation note: we can use recursive calls, but using memoization with array is simpler */
-
-        int[] fib = new int[n];
-
-        for (int i = 0; i < n; i++) {
-            if (i == 0) {
-                fib[i] = 0;
-            } else if (i == 1) {
-                fib[i] = 1;
-            } else {
-                fib[i] = fib[i - 1] + fib[i - 2];
-            }
-        }
-
-        return fib;
-    }
+    private FibonacciCommand() { }
 
     @Override
     public void execute() {
-        this.result = new CommandResult(findFibonacci(n));
+        this.result = new CommandResult(receiver.findFibonacci(n));
     }
 
     @Override

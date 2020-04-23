@@ -1,5 +1,7 @@
 package com.kb.command;
 
+import com.kb.receiver.MathReceiver;
+import com.kb.receiver.StandardMathReceiver;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,22 +14,18 @@ import static org.junit.Assert.*;
 
 public class FibonacciCommandTest {
 
-    Map<Integer, Integer> fibonacciMap = new HashMap<>();
-
+    MathReceiver standardMathReceiver;
     @Before
     public void setUp() {
-        fibonacciMap.put(37, 14930352);
-        fibonacciMap.put(40, 63245986);
-        fibonacciMap.put(7, 8);
-
+        standardMathReceiver = new StandardMathReceiver();
     }
 
     @Test
     public void whenNotExecuted_returnNullCommandResult() {
         int param = 5;
 
-
         FibonacciCommand sut = new FibonacciCommand(
+                standardMathReceiver,
                 FibonacciCommand.createCommandRequest(param)
         );
 
@@ -37,42 +35,28 @@ public class FibonacciCommandTest {
     }
 
     @Test
-    public void whenValidInput_returnValidArrays() {
-        int param = 9;
-        FibonacciCommand sut = new FibonacciCommand(FibonacciCommand.createCommandRequest(param));
+    public void whenExecuted_returnValidCommandResult() {
+        int param = 5;
+
+        FibonacciCommand sut = new FibonacciCommand(
+                standardMathReceiver,
+                FibonacciCommand.createCommandRequest(param)
+        );
+
         sut.execute();
         CommandResult result = sut.getCommandResult();
+        int[] arr = (int[])result.getValue();
 
-        int[] arrayResult = (int[])result.getValue();
-
-        assertEquals(param, arrayResult.length);
-        assertEquals(arrayResult[param - 1], arrayResult[param - 2] + arrayResult[param - 3]);
-
+        assertNotNull(result);
+        assertEquals(param, arr.length);
+        assertEquals(3, arr[arr.length - 1]);
     }
-
-    @Test
-    public void whenMultipleCases_returnValidLastElement() {
-        for (int key : fibonacciMap.keySet()) {
-            FibonacciCommand sut = new FibonacciCommand(
-                    FibonacciCommand.createCommandRequest(key)
-            );
-            sut.execute();
-
-            CommandResult result = sut.getCommandResult();
-            int[] arrayResult = (int[])result.getValue();
-
-            assertEquals((int)fibonacciMap.get(key), arrayResult[arrayResult.length - 1]);
-
-        }
-    }
-
-
 
     @Test(expected = IllegalArgumentException.class)
     public void whenNegative_throwIllegalArgumentException() {
         int param = -1;
 
-        FibonacciCommand sut = new FibonacciCommand(new FibonacciCommandRequest(param));
+        FibonacciCommand sut = new FibonacciCommand(standardMathReceiver, new FibonacciCommandRequest(param));
         sut.execute();
         CommandResult result = sut.getCommandResult();
 

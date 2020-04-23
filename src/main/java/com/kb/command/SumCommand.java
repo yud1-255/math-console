@@ -1,17 +1,23 @@
 package com.kb.command;
 
+import com.kb.receiver.MathReceiver;
+
 public class SumCommand implements Command {
     private double x, y;
+    private MathReceiver receiver;
     private CommandResult result;
 
-    public SumCommand(SumCommandRequest commandRequest) {
+    public SumCommand(MathReceiver receiver, SumCommandRequest commandRequest) {
+        this.receiver = receiver;
         this.x = commandRequest.getX();
         this.y = commandRequest.getY();
     }
 
+    private SumCommand() { }
+
     @Override
     public void execute() {
-        this.result = new CommandResult(x + y);
+        this.result = new CommandResult(receiver.sum(this.x, this.y));
     }
 
     @Override

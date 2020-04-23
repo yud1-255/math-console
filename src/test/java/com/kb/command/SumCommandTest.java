@@ -1,5 +1,7 @@
 package com.kb.command;
 
+import com.kb.receiver.MathReceiver;
+import com.kb.receiver.StandardMathReceiver;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,10 +20,13 @@ public class SumCommandTest {
     @Test
     public void whenNotExecuted_returnNullCommandResult() {
         double param1 = positiveNumbers[3], param2 = positiveNumbers[1];
+        MathReceiver standardMathReceiver = new StandardMathReceiver();
 
         SumCommand sut = new SumCommand(
+                standardMathReceiver,
                 SumCommand.createCommandRequest(param1, param2)
         );
+
         CommandResult result = sut.getCommandResult();
 
         assertNull(result);
@@ -29,30 +34,19 @@ public class SumCommandTest {
 
     @Test
     public void whenExecuted_returnValidCommandResult() {
-        double param1 = positiveNumbers[0], param2 = negativeNumbers[2];
-        double expected = param1 + param2;
+        double param1 = positiveNumbers[3], param2 = positiveNumbers[1];
+        MathReceiver standardMathReceiver = new StandardMathReceiver();
 
-        SumCommand sut = new SumCommand(SumCommand.createCommandRequest(param1, param2));
+        SumCommand sut = new SumCommand(
+                standardMathReceiver,
+                SumCommand.createCommandRequest(param1, param2)
+        );
         sut.execute();
+
         CommandResult result = sut.getCommandResult();
 
         assertNotNull(result);
-        assertTrue(result.getValue() instanceof  Double);
-        assertEquals(expected, result.getValue());
-    }
-
-    @Test
-    public void whenSameNumbers_returnTwoTimesOfInput() {
-        double param1 = positiveNumbers[0], param2 = positiveNumbers[0];
-        double expected = param1 * 2;
-
-        SumCommand sut = new SumCommand(SumCommand.createCommandRequest(param1, param2));
-        sut.execute();
-        CommandResult result = sut.getCommandResult();
-
-        assertNotNull(result);
-        assertTrue(result.getValue() instanceof  Double);
-        assertEquals(expected, result.getValue());
+        assertEquals(param1 + param2, (double)result.getValue(), 1e-8);
     }
 
 }

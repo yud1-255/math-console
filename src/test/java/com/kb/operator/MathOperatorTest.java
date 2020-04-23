@@ -3,6 +3,9 @@ package com.kb.operator;
 import com.kb.command.CommandResult;
 import com.kb.command.MultiplyCommand;
 import com.kb.command.SumCommand;
+import com.kb.receiver.MathReceiver;
+import com.kb.receiver.StandardMathReceiver;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
@@ -11,10 +14,19 @@ import static org.junit.Assert.*;
 
 public class MathOperatorTest {
 
+    MathReceiver standardMathReceiver;
+
+    @Before
+    public void setUp() {
+        standardMathReceiver = new StandardMathReceiver();
+    }
+
     @Test
     public void whenZeroCommandAdded_returnOneCommandList() {
         MathOperator mathOperator = new MathOperator();
-        SumCommand sumCommand = new SumCommand(SumCommand.createCommandRequest(3, 4));
+        SumCommand sumCommand = new SumCommand(
+                standardMathReceiver,
+                SumCommand.createCommandRequest(3, 4));
 
         mathOperator.addCommand(sumCommand);
 
@@ -24,8 +36,12 @@ public class MathOperatorTest {
     @Test
     public void whenExistingCommandsRemoved_returnWithRemovedLastCommand() {
         MathOperator mathOperator = new MathOperator();
-        SumCommand sumCommand = new SumCommand(SumCommand.createCommandRequest(4, 1));
-        MultiplyCommand multiplyCommand = new MultiplyCommand(MultiplyCommand.createCommandRequest(2, 3));
+        SumCommand sumCommand = new SumCommand(
+                standardMathReceiver,
+                SumCommand.createCommandRequest(4, 1)
+        );
+
+        MultiplyCommand multiplyCommand = new MultiplyCommand(standardMathReceiver, MultiplyCommand.createCommandRequest(2, 3));
 
         mathOperator.addCommand(sumCommand);
         mathOperator.addCommand(multiplyCommand);
@@ -48,7 +64,10 @@ public class MathOperatorTest {
     @Test
     public void whenCommandExists_returnValidCommandResult() {
         MathOperator mathOperator = new MathOperator();
-        SumCommand sumCommand = new SumCommand(SumCommand.createCommandRequest(-3, 6));
+        SumCommand sumCommand = new SumCommand(
+                standardMathReceiver,
+                SumCommand.createCommandRequest(-3, 6));
+
         mathOperator.addCommand(sumCommand);
 
         CommandResult commandResult = mathOperator.executeCommand();
@@ -59,8 +78,11 @@ public class MathOperatorTest {
     @Test
     public void whenCommandExists_returnSameNumberOfCommandResults() {
         MathOperator mathOperator = new MathOperator();
-        SumCommand sumCommand = new SumCommand(SumCommand.createCommandRequest(1, 8));
-        MultiplyCommand multiplyCommand = new MultiplyCommand(MultiplyCommand.createCommandRequest(2, 7));
+        SumCommand sumCommand = new SumCommand(
+                standardMathReceiver,
+                SumCommand.createCommandRequest(1, 8));
+
+        MultiplyCommand multiplyCommand = new MultiplyCommand(standardMathReceiver, MultiplyCommand.createCommandRequest(2, 7));
 
         mathOperator.addCommand(sumCommand);
         mathOperator.addCommand(multiplyCommand);
